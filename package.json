@@ -1,0 +1,23 @@
+{
+  "name": "bingo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "auto-balancer.js",
+  "dependencies": {
+    "threads": "^0.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srmcconomy/balanced-bingo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/srmcconomy/balanced-bingo/issues"
+  },
+  "homepage": "https://github.com/srmcconomy/balanced-bingo#readme"
+}

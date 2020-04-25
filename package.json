@@ -8,8 +8,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node auto-balancer.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run clean && node auto-balancer.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -f best-goals.json data.json new-goals.json"
   },
   "repository": {
     "type": "git",

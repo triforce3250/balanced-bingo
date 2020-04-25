@@ -6,14 +6,14 @@ let bestStdDev = Infinity;
 
 async function go() {
 	let num = 0;
-	for (;;) {
+	while (num < 50 && bestStdDev > 60) {
 		num++;
 		let totalIterations = 0;
 		const goalResults = new Map();
 
 		const pool = new Pool(4);
 		pool.run((input, done) => {
-			generator = require(input.__dirname + '/generator');
+			let generator = require(input.__dirname + '/generator');
 			const INDICES_PER_ROW = {
 				"row1": [1, 2, 3, 4, 5],
 				"row2": [6, 7, 8, 9, 10],
@@ -37,7 +37,7 @@ async function go() {
 			generator: './generator',
 		});
 		console.time('asdf');
-		await Promise.all((function*() {
+		await Promise.all((function* () {
 			for (let i = 0; i < 1000; i++) {
 				yield pool.send({ goalList, __dirname }).promise().then(({ rows, iterations }) => {
 					totalIterations += iterations;
@@ -78,27 +78,27 @@ async function go() {
 			goals[goalResults[goalResults.length - 2][0]].weight += 0.05;
 			goals[goalResults[goalResults.length - 1][0]].weight += 0.1;
 		});
-
 	}
+	process.exit(0);
 }
 
-const goals = {}
+const goals = {};
 Object.keys(goalList.normal).forEach(key => {
 	if (Array.isArray(goalList.normal[key])) {
 		goalList.normal[key].forEach(goal => {
 			goal.weight = goal.weight || 0;
 			goals[goal.id] = goal;
-		})
+		});
 	}
 });
 
 function byDiff(arr) {
-	ret = {}
+	let ret = {};
 	arr.forEach(e => {
 		if (!ret[goals[e[0]].difficulty]) {
-			ret[goals[e[0]].difficulty] = []
+			ret[goals[e[0]].difficulty] = [];
 		}
-		ret[goals[e[0]].difficulty].push(e)
+		ret[goals[e[0]].difficulty].push(e);
 	});
 	return ret;
 }

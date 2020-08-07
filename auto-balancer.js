@@ -36,7 +36,7 @@ async function go() {
 		}, {
 			generator: './generator',
 		});
-		console.time('asdf');
+		console.time('ComputationTime');
 		await Promise.all((function* () {
 			for (let i = 0; i < 1000; i++) {
 				yield pool.send({ goalList, __dirname }).promise().then(({ rows, iterations }) => {
@@ -50,7 +50,7 @@ async function go() {
 				});
 			}
 		})());
-		console.timeEnd('asdf');
+		console.timeEnd('ComputationTime');
 		const result = byDiff(sort(goalResults));
 		let avgStdDev = 0;
 		Object.values(result).forEach(goalResults => {

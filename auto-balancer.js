@@ -56,7 +56,7 @@ async function go() {
 		Object.values(result).forEach(goalResults => {
 			const totalFreq = goalResults.reduce((sum, x) => sum + x[1], 0);
 			const avgFreq = totalFreq / goalResults.length;
-			let stdDev = Math.sqrt((goalResults.reduce((sum, x) => sum + (x[1] - avgFreq) ** 2, 0)) / (goalResults.length - 1));
+			let stdDev = Math.sqrt((goalResults.reduce((sum, x) => sum + (x[1] - avgFreq) ** 2, 0)) / Math.max(goalResults.length - 1, 1));
 			avgStdDev += stdDev;
 		});
 		fs.writeFileSync('data.json', JSON.stringify(result));
@@ -73,10 +73,12 @@ async function go() {
 		console.log(`iteration #${num}: iterations : ${totalIterations / 1000} stdDev = ${avgStdDev}, best = ${bestStdDev}`);
 
 		Object.values(result).forEach(goalResults => {
-			goals[goalResults[0][0]].weight -= 0.1;
-			goals[goalResults[1][0]].weight -= 0.05;
-			goals[goalResults[goalResults.length - 2][0]].weight += 0.05;
-			goals[goalResults[goalResults.length - 1][0]].weight += 0.1;
+			if (goalResults.length > 1) {
+				goals[goalResults[0][0]].weight -= 0.1;
+				goals[goalResults[1][0]].weight -= 0.05;
+				goals[goalResults[goalResults.length - 2][0]].weight += 0.05;
+				goals[goalResults[goalResults.length - 1][0]].weight += 0.1;
+			}
 		});
 	}
 	process.exit(0);
